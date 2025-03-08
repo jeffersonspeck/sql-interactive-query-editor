@@ -8,6 +8,7 @@ This project provides a graphical user interface (GUI) for executing SQL queries
 
 - Execute SQL queries directly from a graphical interface.
 - Load and execute SQL queries from files.
+- Export results to XLSX 
 - Interactive, resizable result tables with auto-sized columns.
 - Copy row data easily to the clipboard.
 - User-friendly error handling and clear feedback.
