@@ -19,6 +19,8 @@ This project provides a graphical user interface (GUI) for executing SQL queries
 - **PostgreSQL** (Database)
 - **psycopg2** (Database connection)
 - **python-dotenv** (Environment variable management)
+- **pandas** (DataSet)
+- **openpyxl** (XLSX)
 
 ## Prerequisites
 
@@ -54,7 +56,7 @@ Replace these values with your actual PostgreSQL connection details.
 Run the following command to install necessary Python packages:
 
 ```bash
-pip install psycopg2-binary python-dotenv tabulate
+pip install psycopg2-binary python-dotenv tabulate pandas openpyxl
 ```
 
 ### 4. Install Tkinter

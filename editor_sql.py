@@ -4,6 +4,7 @@ from dotenv import load_dotenv  # type: ignore
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import tkinter.font as tkFont
+import pandas as pd  # Adicione esta importação
 
 load_dotenv()
 
@@ -44,6 +45,9 @@ class SQLApp:
         self.copy_button = tk.Button(button_frame, text="Copy Selected Row", command=self.copy_selection)
         self.copy_button.pack(side=tk.LEFT, padx=5)
 
+        self.export_button = tk.Button(button_frame, text="Export to XLSX", command=self.export_to_xlsx)
+        self.export_button.pack(side=tk.LEFT, padx=5)
+
         result_frame = tk.Frame(root)
         result_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
@@ -73,6 +77,33 @@ class SQLApp:
         else:
             self.root.config(cursor="")
             self.processing_label.destroy()
+
+    def export_to_xlsx(self):
+        if not self.tree.get_children():
+            messagebox.showwarning("Warning", "No data available to export.")
+            return
+
+        filepath = filedialog.asksaveasfilename(
+            defaultextension=".xlsx",
+            filetypes=[("Excel Files", "*.xlsx"), ("All Files", "*.*")]
+        )
+
+        if not filepath:
+            return
+
+        data = []
+        headers = self.tree["columns"]
+
+        for row_id in self.tree.get_children():
+            data.append(self.tree.item(row_id)['values'])
+
+        df = pd.DataFrame(data, columns=headers)
+
+        try:
+            df.to_excel(filepath, index=False)
+            messagebox.showinfo("Success", f"Data exported successfully to:\n{filepath}")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to export data:\n{e}")            
 
     def run_query(self):
         query = self.input_area.get("1.0", tk.END).strip()
